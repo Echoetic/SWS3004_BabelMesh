@@ -1,0 +1,92 @@
+# ===================================================================
+# 后端服务 - Flask API + 代理服务器
+# ===================================================================
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend-deployment
+  namespace: vpn-proxy
+  labels:
+    app: vpn-backend
+    tier: backend
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: vpn-backend
+  template:
+    metadata:
+      labels:
+        app: vpn-backend
+        tier: backend
+    spec:
+      containers:
+      - name: backend
+        image: vpn-backend:latest
+        imagePullPolicy: Never  # 使用本地镜像
+        ports:
+        - containerPort: 5000
+          name: api
+          protocol: TCP
+        - containerPort: 8888
+          name: proxy
+          protocol: TCP
+        env:
+        - name: FLASK_ENV
+          value: "production"
+        - name: FLASK_APP
+          value: "app.py"
+        - name: PYTHONPATH
+          value: "/app"
+        - name: REDIS_URL
+          value: "redis://redis-service:6379"
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "250m"
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 5000
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
+        readinessProbe:
+          httpGet:
+            path: /ready
+            port: 5000
+          initialDelaySeconds: 5
+          periodSeconds: 5
+          timeoutSeconds: 3
+          failureThreshold: 3
+      restartPolicy: Always
+
+---
+# ===================================================================
+# 后端服务 - Service配置
+# ===================================================================
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend-service
+  namespace: vpn-proxy
+  labels:
+    app: vpn-backend
+    tier: backend
+spec:
+  type: ClusterIP
+  ports:
+  - name: api
+    port: 5000
+    targetPort: 5000
+    protocol: TCP
+  - name: proxy
+    port: 8888
+    targetPort: 8888
+    protocol: TCP
+  selector:
+    app: vpn-backend
