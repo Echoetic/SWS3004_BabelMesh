@@ -1,0 +1,10 @@
+# ===================================================================
+# 命名空间配置 - VPN代理服务专用命名空间
+# ===================================================================
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: vpn-proxy
+  labels:
+    app: vpn-proxy
+    environment: development
