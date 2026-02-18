@@ -1,7 +1,7 @@
 # BabelMesh: A Modern Proxy Service Management Platform
 
 <p align="center">
-  <img src="banner.png" alt="BabelMesh Banner" width="700"/>
+  <img src="Banner.png" alt="BabelMesh Banner" width="700"/>
 </p>
 
 <p align="center">
