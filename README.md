@@ -23,7 +23,7 @@
 
 ## 🏆 Award & Recognition
 
-This project was developed during the **NUS School of Computing (SoC) Summer Workshop 2024**, under the **AI, Robots & AIoT Cluster — Cloud Computing Track**, supervised by **Prof. Richard Ma (马天白)** and Teaching Assistant **Tiantong Hu**, PhD candidate under Prof. Ma.
+This project was developed during the **NUS School of Computing (SoC) Summer Workshop 2025**, under the **AI, Robots & AIoT Cluster — Cloud Computing Track**, supervised by **Prof. Richard Ma (马天白)** and Teaching Assistant **Tiantong Hu**, PhD candidate under Prof. Ma.
 
 > 🥈 **2nd Place** in the Summer Workshop competition — **Grade: A+**
 
