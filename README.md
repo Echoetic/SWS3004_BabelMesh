@@ -5,7 +5,7 @@
 </p>
 
 <p align="center">
-  <img alt="NUS SoC Summer Workshop" src="https://img.shields.io/badge/NUS_SoC_Summer_Workshop-2024-orange?style=for-the-badge"/>
+  <img alt="NUS SoC Summer Workshop" src="https://img.shields.io/badge/NUS_SoC_Summer_Workshop-2025-orange?style=for-the-badge"/>
   <img alt="Award" src="https://img.shields.io/badge/Competition-2nd_Place_🥈-silver?style=for-the-badge"/>
   <img alt="Grade" src="https://img.shields.io/badge/Grade-A+-brightgreen?style=for-the-badge"/>
   <img alt="License" src="https://img.shields.io/badge/License-MIT-blue?style=for-the-badge"/>
