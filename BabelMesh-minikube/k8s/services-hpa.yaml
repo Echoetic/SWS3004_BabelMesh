@@ -1,0 +1,75 @@
+# ===================================================================
+# 代理服务外部访问 - NodePort Service
+# ===================================================================
+apiVersion: v1
+kind: Service
+metadata:
+  name: proxy-external-service
+  namespace: vpn-proxy
+  labels:
+    app: vpn-proxy
+    service-type: external
+spec:
+  type: NodePort
+  ports:
+  - name: proxy-http
+    port: 8888
+    targetPort: 8888
+    nodePort: 30888  # 外部访问代理服务的端口
+    protocol: TCP
+  selector:
+    app: vpn-backend
+
+---
+# ===================================================================
+# 水平自动扩展 - 后端服务HPA
+# ===================================================================
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: backend-hpa
+  namespace: vpn-proxy
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: backend-deployment
+  minReplicas: 2
+  maxReplicas: 5
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 70
+  - type: Resource
+    resource:
+      name: memory
+      target:
+        type: Utilization
+        averageUtilization: 80
+
+---
+# ===================================================================
+# 水平自动扩展 - 前端服务HPA
+# ===================================================================
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: frontend-hpa
+  namespace: vpn-proxy
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: frontend-deployment
+  minReplicas: 2
+  maxReplicas: 3
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 80
